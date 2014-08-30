@@ -31,16 +31,12 @@ namespace FeedLister
         public Body Body { get; private set; }
         public string Version { get; private set; } // Required.
 
-
-
         private OpmlDocument(string version, Head head, Body body)
         {
             this.Version = version;
             this.Head = head;
             this.Body = body;
         }
-
-
 
         public static OpmlDocument Create(XDocument opml, bool strict = true)
         {
@@ -107,6 +103,12 @@ namespace FeedLister
 
             var opmlDocument = new OpmlDocument(opmlVersion, head, body);
             return opmlDocument;
+        }
+
+        public static OpmlDocument Load(string docPath, bool strict = true)
+        {
+            var opmlData = XDocument.Load(docPath, LoadOptions.SetLineInfo);
+            return Create(opmlData);
         }
     }
 }
